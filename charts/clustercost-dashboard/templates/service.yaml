@@ -4,6 +4,13 @@ metadata:
   name: {{ include "clustercost-dashboard.fullname" . }}
   labels:
     {{- include "clustercost-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   selector:

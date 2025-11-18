@@ -12,6 +12,8 @@ serviceAccount:
   annotations: {}
   name: ""
 
+commonLabels: {}
+
 service:
   type: ClusterIP
   port: 8080
@@ -39,6 +41,28 @@ securityContext: {}
 extraEnv: []
 extraEnvFrom: []
 extraArgs: []
+
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /readyz
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+  successThreshold: 1
 
 pricing:
   provider: aws

@@ -4,6 +4,9 @@ metadata:
   name: {{ include "clustercost-dashboard.fullname" . }}-config
   labels:
     {{- include "clustercost-dashboard.labels" . | nindent 4 }}
+    {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 data:
   dashboard.yaml: |
     {{- toYaml .Values.config | nindent 4 }}

@@ -1,9 +1,14 @@
+{{- $fullName := include "clustercost-agent-k8s.fullname" . -}}
+{{- $configChecksum := include (print $.Template.BasePath "/configmap.yaml") . | sha256sum -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "clustercost-agent-k8s.fullname" . }}
+  name: {{ $fullName }}
   labels:
     {{- include "clustercost-agent-k8s.labels" . | nindent 4 }}
+    {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -17,7 +22,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ $configChecksum }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -52,7 +57,12 @@ spec:
               value: {{ .Values.clusterName | quote }}
             {{- range .Values.extraEnv }}
             - name: {{ .name }}
+              {{- if hasKey . "valueFrom" }}
+              valueFrom:
+                {{- toYaml .valueFrom | nindent 16 }}
+              {{- else }}
               value: {{ .value | quote }}
+              {{- end }}
             {{- end }}
           {{- with .Values.extraEnvFrom }}
           envFrom:
@@ -62,6 +72,16 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          {{- $liveness := .Values.livenessProbe }}
+          {{- if $liveness.enabled }}
+          livenessProbe:
+            {{- omit $liveness "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          {{- $readiness := .Values.readinessProbe }}
+          {{- if $readiness.enabled }}
+          readinessProbe:
+            {{- omit $readiness "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
@@ -86,4 +106,4 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{ default (include "clustercost-agent-k8s.fullname" .) .Values.config.existingConfigMap }}
+            name: {{ default $fullName .Values.config.existingConfigMap }}

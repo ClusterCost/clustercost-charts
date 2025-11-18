@@ -17,10 +17,19 @@ Use `-f my-values.yaml` or `--set key=value` to override defaults.
 | `replicaCount` | Number of dashboard pods | `1` |
 | `image.repository` / `image.tag` | Container image reference | `ghcr.io/clustercost/dashboard:latest` |
 | `service.type` | Kubernetes Service type | `ClusterIP` |
+| `commonLabels` | Extra labels applied to all dashboard resources | `{}` |
 | `config` | Dashboard YAML config rendered into a ConfigMap | See `values.yaml` |
 | `env` | Extra environment variables for the container | LISTEN_ADDR / CONFIG_FILE |
+| `ingress.enabled` | Creates an Ingress pointing to the dashboard service | `false` |
 
 See `values.yaml` for the full list.
+
+## Features
+
+- Built-in config checksum annotations trigger rollouts when `config` changes.
+- Readiness/liveness probes are enabled by default; override probe paths or timings via `values.yaml`.
+- Optional Ingress manifests render when `ingress.enabled` is true for exposing the dashboard externally.
+- `values.schema.json` provides validation and IDE hints when overriding values.
 
 ## Validation
 

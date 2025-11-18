@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: jesuspaz/clustercost-dashboard
+  repository: ghcr.io/clustercost/dashboard
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -14,7 +14,10 @@ serviceAccount:
   annotations: {}
   name: ""
 
+commonLabels: {}
+podLabels: {}
 podAnnotations: {}
+deploymentAnnotations: {}
 
 podSecurityContext: {}
 securityContext: {}
@@ -23,6 +26,18 @@ service:
   type: ClusterIP
   port: 8080
   targetPort: 8080
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: dashboard.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
 
 resources:
   requests:
@@ -39,6 +54,31 @@ affinity: {}
 env:
   LISTEN_ADDR: ":9090"
   CONFIG_FILE: /config/dashboard.yaml
+
+extraEnv: []
+extraEnvFrom: []
+
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /readyz
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+  successThreshold: 1
 
 config:
   listenAddr: ":8080"
