@@ -12,7 +12,7 @@ keywords:
   - prometheus
 maintainers:
   - name: ClusterCost
-    email: support@clustercost.dev
+    email: support@clustercost.com
 type: application
 version: 0.1.0
 appVersion: 0.1.0
