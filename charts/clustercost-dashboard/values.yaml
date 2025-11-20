@@ -80,6 +80,8 @@ readinessProbe:
   failureThreshold: 3
   successThreshold: 1
 
+agents: [] # Optional override for config.agents
+
 config:
   listenAddr: ":9090"
   pollInterval: 30s

@@ -7,6 +7,10 @@ metadata:
     {{- with .Values.commonLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
+{{- $config := deepCopy .Values.config }}
+{{- if hasKey .Values "agents" }}
+{{- $_ := set $config "agents" .Values.agents }}
+{{- end }}
 data:
   dashboard.yaml: |
-    {{- toYaml .Values.config | nindent 4 }}
+    {{- toYaml $config | nindent 4 }}

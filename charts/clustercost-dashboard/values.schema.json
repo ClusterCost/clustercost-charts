@@ -105,6 +105,10 @@
     },
     "livenessProbe": {"$ref": "#/definitions/probe"},
     "readinessProbe": {"$ref": "#/definitions/probe"},
+    "agents": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/agent"}
+    },
     "config": {
       "type": "object",
       "properties": {
@@ -112,16 +116,7 @@
         "pollInterval": {"type": "string"},
         "agents": {
           "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {"type": "string"},
-              "baseUrl": {"type": "string"},
-              "type": {"type": "string"}
-            },
-            "required": ["name", "baseUrl", "type"],
-            "additionalProperties": false
-          }
+          "items": {"$ref": "#/definitions/agent"}
         }
       },
       "additionalProperties": true
@@ -169,6 +164,16 @@
       },
       "required": ["enabled"],
       "additionalProperties": true
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "baseUrl": {"type": "string"},
+        "type": {"type": "string"}
+      },
+      "required": ["name", "baseUrl", "type"],
+      "additionalProperties": false
     }
   }
 }
