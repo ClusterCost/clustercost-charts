@@ -5,7 +5,7 @@ This chart deploys the ClusterCost Kubernetes cost agent as a single cluster-wid
 ## Installation
 
 ```bash
-helm repo add clustercost https://charts.clustercost.io
+helm repo add clustercost https://charts.clustercost.com
 helm repo update
 helm install clustercost-agent clustercost/clustercost-agent-k8s \
   --namespace clustercost --create-namespace

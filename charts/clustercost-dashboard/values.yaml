@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/clustercost/dashboard
+  repository: jesuspaz/clustercost-dashboard
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -24,8 +24,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 9090
+  targetPort: 9090
   annotations: {}
 
 ingress:
@@ -61,7 +61,7 @@ extraEnvFrom: []
 livenessProbe:
   enabled: true
   httpGet:
-    path: /healthz
+    path: /api/health
     port: http
   initialDelaySeconds: 10
   periodSeconds: 15
@@ -72,7 +72,7 @@ livenessProbe:
 readinessProbe:
   enabled: true
   httpGet:
-    path: /readyz
+    path: /api/health
     port: http
   initialDelaySeconds: 5
   periodSeconds: 10
@@ -81,9 +81,9 @@ readinessProbe:
   successThreshold: 1
 
 config:
-  listenAddr: ":8080"
+  listenAddr: ":9090"
   pollInterval: 30s
   agents:
     - name: local-cluster
-      baseUrl: http://clustercost-agent-k8s.default.svc.cluster.local:8080
+      baseUrl: http://clustercost-agent-clustercost-agent-k8s.clustercost.svc.cluster.local:8080
       type: k8s

@@ -45,7 +45,7 @@ extraArgs: []
 livenessProbe:
   enabled: true
   httpGet:
-    path: /healthz
+    path: /agent/v1/health
     port: http
   initialDelaySeconds: 10
   periodSeconds: 15
@@ -56,20 +56,13 @@ livenessProbe:
 readinessProbe:
   enabled: true
   httpGet:
-    path: /readyz
+    path: /agent/v1/readyz
     port: http
   initialDelaySeconds: 5
   periodSeconds: 10
   timeoutSeconds: 3
   failureThreshold: 3
   successThreshold: 1
-
-pricing:
-  provider: aws
-  region: us-east-1
-  cpuHourPrice: 0.046
-  memoryGibHourPrice: 0.005
-  awsNodePrices: {}
 
 scrapeIntervalSeconds: 30
 logLevel: info
