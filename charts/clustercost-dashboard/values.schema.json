@@ -106,6 +106,7 @@
     "livenessProbe": {"$ref": "#/definitions/probe"},
     "readinessProbe": {"$ref": "#/definitions/probe"},
     "agents": {
+      "description": "Optional override for config.agents",
       "type": "array",
       "items": {"$ref": "#/definitions/agent"}
     },

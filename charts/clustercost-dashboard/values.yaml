@@ -80,7 +80,7 @@ readinessProbe:
   failureThreshold: 3
   successThreshold: 1
 
-agents: [] # Optional override for config.agents
+# agents: [] # Optional override for config.agents
 
 config:
   listenAddr: ":9090"
