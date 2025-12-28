@@ -102,7 +102,17 @@
         "cgroupRoot": {"type": "string"},
         "mountBpf": {"type": "boolean"},
         "mountCgroup": {"type": "boolean"},
-        "mountBtf": {"type": "boolean"}
+        "mountBtf": {"type": "boolean"},
+        "init": {
+          "type": "object",
+          "properties": {
+            "enabled": {"type": "boolean"},
+            "image": {"type": "string"},
+            "imagePullPolicy": {"type": "string"},
+            "command": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     },
