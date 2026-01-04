@@ -201,8 +201,11 @@
         "listenAddr": {
           "type": "string"
         },
-        "pollInterval": {
+        "grpcAddr": {
           "type": "string"
+        },
+        "disableHttpPolling": {
+          "type": "boolean"
         },
         "agents": {
           "type": "array",

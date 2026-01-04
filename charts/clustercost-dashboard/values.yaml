@@ -52,7 +52,7 @@ tolerations: []
 affinity: {}
 
 env:
-  CONFIG_FILE: /etc/clustercost/config.yaml
+  DISABLE_HTTP_POLLING: "true"
 
 extraEnv: []
 extraEnvFrom: []
@@ -84,10 +84,5 @@ readinessProbe:
 config:
   listenAddr: ":9090"
   grpcAddr: ":9091"
-  defaultAgentToken: ""
-  pollInterval: 30s
-  agents:
-    - name: local-cluster
-      baseUrl: http://clustercost-agent-clustercost-agent-k8s.clustercost.svc.cluster.local:8080
-      token: "change-me"
-      type: k8s
+  disableHttpPolling: true
+  agents: []

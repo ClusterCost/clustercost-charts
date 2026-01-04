@@ -108,7 +108,7 @@ ebpf:
 
 remote:
   enabled: true
-  endpoint: http://clustercost-dashboard.clustercost.svc.cluster.local:9090/agent/v1/report
+  endpoint: http://clustercost-dashboard.clustercost.svc.cluster.local:9091
   timeout: 10s
   queueDir: /var/lib/clustercost/queue
   queueEnabled: true
