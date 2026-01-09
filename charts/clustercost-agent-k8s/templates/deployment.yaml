@@ -27,6 +27,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ include "clustercost-agent-k8s.serviceAccountName" . }}
+      dnsPolicy: ClusterFirstWithHostNet
       {{- if .Values.pod.hostNetwork }}
       hostNetwork: true
       {{- end }}
