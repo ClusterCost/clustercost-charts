@@ -1,22 +1,22 @@
-{{- $fullName := include "clustercost-agent-k8s.fullname" . -}}
+{{- $fullName := include "recon-agent.fullname" . -}}
 
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "clustercost-agent-k8s.labels" . | nindent 4 }}
+    {{- include "recon-agent.labels" . | nindent 4 }}
     {{- with .Values.commonLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   selector:
     matchLabels:
-      {{- include "clustercost-agent-k8s.selectorLabels" . | nindent 6 }}
+      {{- include "recon-agent.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "clustercost-agent-k8s.selectorLabels" . | nindent 8 }}
+        {{- include "recon-agent.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -25,7 +25,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ include "clustercost-agent-k8s.serviceAccountName" . }}
+      serviceAccountName: {{ include "recon-agent.serviceAccountName" . }}
       dnsPolicy: ClusterFirstWithHostNet
       {{- if .Values.pod.hostNetwork }}
       hostNetwork: true

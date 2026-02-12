@@ -1,11 +1,11 @@
 {{- if .Values.ingress.enabled }}
-{{- $fullName := include "clustercost-dashboard.fullname" . -}}
+{{- $fullName := include "recon.fullname" . -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "clustercost-dashboard.labels" . | nindent 4 }}
+    {{- include "recon.labels" . | nindent 4 }}
     {{- with .Values.commonLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -30,7 +30,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $.Values.service.port }}
+                  number: {{ $.Values.service.httpPort }}
           {{- end }}
     {{- end }}
   {{- end }}

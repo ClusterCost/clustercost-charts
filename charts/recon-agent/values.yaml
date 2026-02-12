@@ -1,5 +1,5 @@
 image:
-  repository: jesuspaz/clustercost-agent-k8s
+  repository: ghcr.io/projecthelena/recon-agent
   tag: "latest"
   pullPolicy: Always
 
@@ -73,17 +73,17 @@ env:
       fieldRef:
         fieldPath: metadata.namespace
 
-  - name: CLUSTERCOST_SCRAPE_INTERVAL
+  - name: RECON_SCRAPE_INTERVAL
     value: "15"
-  - name: CLUSTERCOST_ENABLE_NETWORK
+  - name: RECON_ENABLE_NETWORK
     value: "true"
-  - name: CLUSTERCOST_NETWORK_REPORT_INTERVAL
+  - name: RECON_NETWORK_REPORT_INTERVAL
     value: "300"
-  - name: CLUSTERCOST_REMOTE_ENDPOINT
-    value: "clustercost-dashboard.clustercost.svc.cluster.local:9091"
-  - name: CLUSTERCOST_REMOTE_PROTOCOL
+  - name: RECON_REMOTE_ENDPOINT
+    value: "recon.recon.svc.cluster.local:9091"
+  - name: RECON_REMOTE_PROTOCOL
     value: "grpc"
-  - name: CLUSTERCOST_REMOTE_AUTH_TOKEN
+  - name: RECON_REMOTE_AUTH_TOKEN
     value: ""
   - name: GOGC
     value: "100"

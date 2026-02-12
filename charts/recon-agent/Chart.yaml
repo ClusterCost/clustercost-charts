@@ -1,0 +1,18 @@
+apiVersion: v2
+name: recon-agent
+description: Recon Kubernetes cost visibility agent
+home: https://github.com/projecthelena/charts
+sources:
+  - https://github.com/projecthelena/charts
+icon: https://raw.githubusercontent.com/projecthelena/charts/main/assets/icon.png
+keywords:
+  - cost
+  - finops
+  - kubernetes
+  - prometheus
+maintainers:
+  - name: Project Helena
+    email: jesus@projecthelena.com
+type: application
+version: 0.1.0
+appVersion: 0.1.0

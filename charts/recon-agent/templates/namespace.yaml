@@ -4,7 +4,7 @@ kind: Namespace
 metadata:
   name: {{ default .Release.Namespace .Values.namespace.name }}
   labels:
-    {{- include "clustercost-agent-k8s.labels" . | nindent 4 }}
+    {{- include "recon-agent.labels" . | nindent 4 }}
     {{- with .Values.commonLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
