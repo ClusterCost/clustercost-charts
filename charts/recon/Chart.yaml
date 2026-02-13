@@ -1,0 +1,18 @@
+apiVersion: v2
+name: recon
+description: Helm chart for deploying the Recon dashboard component
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+icon: https://raw.githubusercontent.com/projecthelena/charts/main/assets/icon.png
+home: https://github.com/projecthelena/helm-charts
+sources:
+  - https://github.com/projecthelena/helm-charts
+keywords:
+  - cost
+  - finops
+  - dashboard
+  - kubernetes
+maintainers:
+  - name: Project Helena
+    email: jesus@projecthelena.com

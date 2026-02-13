@@ -1,11 +1,11 @@
-# Clustercost Dashboard Chart
+# Recon Dashboard Chart
 
-Helm chart for deploying the ClusterCost dashboard component. It renders a web UI that aggregates metrics from deployed ClusterCost agents.
+Helm chart for deploying the Recon dashboard component. It renders a web UI that aggregates metrics from deployed Recon agents.
 
 ## Installation
 
 ```sh
-helm install clustercost-dashboard charts/clustercost-dashboard --namespace clustercost --create-namespace
+helm install recon charts/recon --namespace recon --create-namespace
 ```
 
 Use `-f my-values.yaml` or `--set key=value` to override defaults.
@@ -15,7 +15,7 @@ Use `-f my-values.yaml` or `--set key=value` to override defaults.
 | Value | Description | Default |
 | --- | --- | --- |
 | `replicaCount` | Number of dashboard pods | `1` |
-| `image.repository` / `image.tag` | Container image reference | `ghcr.io/clustercost/dashboard:latest` |
+| `image.repository` / `image.tag` | Container image reference | `ghcr.io/projecthelena/recon:latest` |
 | `service.type` | Kubernetes Service type | `ClusterIP` |
 | `commonLabels` | Extra labels applied to all dashboard resources | `{}` |
 | `agents` | Optional list of agent endpoints; overrides `config.agents` | `[]` |
@@ -39,8 +39,8 @@ See `values.yaml` for the full list.
 Run the following before opening a PR:
 
 ```sh
-helm lint charts/clustercost-dashboard
-helm template charts/clustercost-dashboard | kubectl apply --dry-run=client -f -
+helm lint charts/recon
+helm template charts/recon | kubectl apply --dry-run=client -f -
 ```
 
 ## Related Docs

@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34d399"/>
-      <stop offset="100%" stop-color="#059669"/>
-    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>
+    </radialGradient>
   </defs>
-  <rect width="128" height="128" rx="28" fill="#0b192f"/>
-  <rect x="8" y="8" width="112" height="112" rx="24" stroke="url(#g)" stroke-width="6" fill="none"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-size="80">💸</text>
+  <rect width="32" height="32" rx="6" fill="#09090b"/>
+  <rect width="32" height="32" rx="6" fill="url(#glow)"/>
+  <text x="7" y="20.5" font-family="system-ui, -apple-system, 'Helvetica Neue', Helvetica, sans-serif" font-size="14" font-weight="700" fill="#ffffff">P</text>
+  <text x="16.5" y="20.5" font-family="system-ui, -apple-system, 'Helvetica Neue', Helvetica, sans-serif" font-size="14" font-weight="300" fill="#9ca3af">H</text>
 </svg>

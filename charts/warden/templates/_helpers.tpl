@@ -1,8 +1,8 @@
-{{- define "clustercost-dashboard.name" -}}
+{{- define "warden.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "clustercost-dashboard.fullname" -}}
+{{- define "warden.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -15,13 +15,13 @@
 {{- end }}
 {{- end }}
 
-{{- define "clustercost-dashboard.chart" -}}
+{{- define "warden.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "clustercost-dashboard.labels" -}}
-helm.sh/chart: {{ include "clustercost-dashboard.chart" . }}
-app.kubernetes.io/name: {{ include "clustercost-dashboard.name" . }}
+{{- define "warden.labels" -}}
+helm.sh/chart: {{ include "warden.chart" . }}
+app.kubernetes.io/name: {{ include "warden.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -29,15 +29,24 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
-{{- define "clustercost-dashboard.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "clustercost-dashboard.name" . }}
+{{- define "warden.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "warden.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "clustercost-dashboard.serviceAccountName" -}}
+{{- define "warden.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "clustercost-dashboard.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "warden.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
+{{- end }}
+
+{{/*
+Whether the chart needs to create a Secret resource.
+*/}}
+{{- define "warden.createSecret" -}}
+{{- if or .Values.adminSecret (and (eq .Values.database.type "postgres") .Values.database.postgres.enabled (not .Values.database.external.enabled)) (and (eq .Values.database.type "postgres") .Values.database.external.enabled .Values.database.external.url (not .Values.database.external.existingSecret)) -}}
+true
+{{- end -}}
 {{- end }}

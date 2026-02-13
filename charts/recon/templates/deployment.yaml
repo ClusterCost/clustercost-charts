@@ -1,11 +1,11 @@
-{{- $fullName := include "clustercost-dashboard.fullname" . -}}
+{{- $fullName := include "recon.fullname" . -}}
 {{- $configChecksum := include (print $.Template.BasePath "/secret.yaml") . | sha256sum -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "clustercost-dashboard.labels" . | nindent 4 }}
+    {{- include "recon.labels" . | nindent 4 }}
     {{- with .Values.commonLabels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -17,11 +17,11 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "clustercost-dashboard.selectorLabels" . | nindent 6 }}
+      {{- include "recon.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "clustercost-dashboard.selectorLabels" . | nindent 8 }}
+        {{- include "recon.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -31,7 +31,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ include "clustercost-dashboard.serviceAccountName" . }}
+      serviceAccountName: {{ include "recon.serviceAccountName" . }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -41,7 +41,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ include "clustercost-dashboard.name" . }}
+        - name: {{ include "recon.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -70,7 +70,7 @@ spec:
           {{- end }}
           volumeMounts:
             - name: config-volume
-              mountPath: /etc/clustercost
+              mountPath: /etc/recon
               readOnly: true
           {{- $liveness := .Values.livenessProbe }}
           {{- if $liveness.enabled }}

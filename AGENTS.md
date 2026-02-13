@@ -1,13 +1,13 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `charts/` contains all Helm packages; each chart lives in its own directory (e.g., `charts/clustercost-dashboard`, `charts/clustercost-agent-k8s`).
+- `charts/` contains all Helm packages; each chart lives in its own directory (e.g., `charts/recon`, `charts/recon-agent`, `charts/warden`).
 - Each chart follows the Helm layout: `Chart.yaml`, `values.yaml`, and `templates/` with Kubernetes manifests (Deployment, Service, ConfigMap, etc.).
 - Keep chart-specific assets (helpers, notes) inside their chart directory; avoid cross-chart imports.
 
 ## Build, Test, and Development Commands
 - `helm lint charts/<chart-name>`: static validation for a chart; run before every PR.
-- `helm template charts/<chart-name>`: render manifests locally for inspection, e.g., `helm template charts/clustercost-dashboard`.
+- `helm template charts/<chart-name>`: render manifests locally for inspection, e.g., `helm template charts/recon`.
 - `helm install <release> charts/<chart-name> --namespace <ns>`: deploy to a cluster; use a sandbox namespace when testing new changes.
 
 ## Coding Style & Naming Conventions
@@ -27,5 +27,5 @@
 
 ## Security & Configuration Tips
 - Never commit secrets; leverage Kubernetes Secrets and reference them via `values.yaml`.
-- Default images should point to trusted registries (`ghcr.io/clustercost/...`). Bump tags intentionally and document breaking changes.
+- Default images should point to trusted registries (`ghcr.io/projecthelena/...`). Bump tags intentionally and document breaking changes.
 - Provide configuration examples for connecting agents (e.g., `values.yaml` `config.agents`) so operators can mirror recommended settings.
