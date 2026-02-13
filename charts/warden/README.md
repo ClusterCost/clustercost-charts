@@ -1,6 +1,6 @@
 # Warden Chart
 
-Helm chart for deploying the Warden policy engine as part of the Project Helena ecosystem.
+Helm chart for deploying Warden — open-source uptime monitoring built in Go. Multi-zone checks, status pages, unlimited team members. Part of the Project Helena ecosystem.
 
 ## Installation
 

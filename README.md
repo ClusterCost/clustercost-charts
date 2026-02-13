@@ -8,7 +8,7 @@ Helm charts for deploying the [Project Helena](https://github.com/projecthelena)
 | --- | --- |
 | [recon](charts/recon) | Web dashboard that aggregates cost metrics from distributed agents. Includes optional VictoriaMetrics for time-series storage. |
 | [recon-agent](charts/recon-agent) | DaemonSet agent that collects cluster cost data via eBPF and reports to recon over gRPC. |
-| [warden](charts/warden) | Policy engine for enforcing cost and operational policies. Supports SQLite and PostgreSQL backends. |
+| [warden](charts/warden) | Open-source uptime monitoring built in Go. Multi-zone checks, status pages, unlimited team members — the production-grade upgrade from Uptime Kuma. Supports SQLite and PostgreSQL backends. |
 
 ## Usage
 

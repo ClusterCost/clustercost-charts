@@ -8,7 +8,7 @@ Helm charts for deploying the Project Helena ecosystem — a Kubernetes cost vis
 
 - **recon**: Web dashboard that aggregates cost metrics from distributed agents. Includes optional VictoriaMetrics StatefulSet for time-series storage.
 - **recon-agent**: DaemonSet agent that collects cluster cost data via eBPF and reports to the dashboard over gRPC.
-- **warden**: Policy engine for enforcing cost and operational policies.
+- **warden**: Open-source uptime monitoring built in Go. Multi-zone checks, status pages, unlimited team members.
 
 ## Commands
 

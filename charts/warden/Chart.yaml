@@ -1,6 +1,6 @@
 apiVersion: v2
 name: warden
-description: Helm chart for deploying the Warden policy engine
+description: Helm chart for Warden — open-source uptime monitoring built in Go
 type: application
 version: 0.1.0
 appVersion: "0.1.0"
@@ -9,9 +9,9 @@ home: https://github.com/projecthelena/helm-charts
 sources:
   - https://github.com/projecthelena/helm-charts
 keywords:
-  - cost
-  - finops
-  - policy
+  - monitoring
+  - uptime
+  - status-page
   - kubernetes
 maintainers:
   - name: Project Helena
