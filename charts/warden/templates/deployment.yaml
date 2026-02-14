@@ -49,6 +49,40 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if eq .Values.database.type "postgres" }}
+      initContainers:
+        - name: wait-for-db
+          image: "{{ .Values.database.postgres.image.repository }}:{{ .Values.database.postgres.image.tag }}"
+          imagePullPolicy: {{ .Values.database.postgres.image.pullPolicy }}
+          env:
+            {{- if and .Values.database.external.enabled .Values.database.external.existingSecret }}
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.external.existingSecret }}
+                  key: {{ .Values.database.external.existingSecretKey }}
+            {{- else if .Values.database.external.enabled }}
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}
+                  key: db-url
+            {{- else }}
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}-postgresql
+                  key: db-url
+            {{- end }}
+          command:
+            - sh
+            - -c
+            - |
+              until pg_isready -d "$DB_URL"; do
+                echo "Waiting for PostgreSQL to be ready..."
+                sleep 2
+              done
+      {{- end }}
       containers:
         - name: {{ include "warden.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
