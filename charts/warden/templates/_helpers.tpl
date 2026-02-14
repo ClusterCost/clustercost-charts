@@ -46,7 +46,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Whether the chart needs to create a Secret resource.
 */}}
 {{- define "warden.createSecret" -}}
-{{- if or .Values.adminSecret (and (eq .Values.database.type "postgres") .Values.database.postgres.enabled (not .Values.database.external.enabled)) (and (eq .Values.database.type "postgres") .Values.database.external.enabled .Values.database.external.url (not .Values.database.external.existingSecret)) -}}
+{{- if or .Values.adminSecret (and (eq .Values.database.type "postgres") .Values.database.external.enabled .Values.database.external.url (not .Values.database.external.existingSecret)) -}}
 true
 {{- end -}}
 {{- end }}

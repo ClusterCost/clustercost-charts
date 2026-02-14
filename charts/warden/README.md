@@ -69,6 +69,66 @@ database:
     existingSecretKey: db-url
 ```
 
+## Exposing Warden
+
+The chart supports two ways to expose Warden externally: standard Kubernetes Ingress and Traefik IngressRoute. You can enable one or both depending on your setup.
+
+### Kubernetes Ingress
+
+Works with any ingress controller (nginx, HAProxy, etc.). The chart auto-detects the cluster API version and renders the correct format (`networking.k8s.io/v1`, `networking.k8s.io/v1beta1`, or `extensions/v1beta1`).
+
+```yaml
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: status.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: status-tls
+      hosts:
+        - status.example.com
+```
+
+### Traefik IngressRoute
+
+Native Traefik CRD (`traefik.io/v1alpha1`). Use this when running Traefik as your ingress controller and you want access to Traefik-specific features like middlewares and cert resolvers.
+
+```yaml
+ingressRoute:
+  enabled: true
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`status.example.com`)
+      kind: Rule
+  tls:
+    certResolver: letsencrypt
+```
+
+Routes default to the warden service and port. To override, specify `services` explicitly:
+
+```yaml
+ingressRoute:
+  enabled: true
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`status.example.com`)
+      kind: Rule
+      services:
+        - name: my-custom-service
+          port: 8080
+      middlewares:
+        - name: my-middleware
+  tls:
+    certResolver: letsencrypt
+```
+
 ## Key Values
 
 | Value | Description | Default |
@@ -82,7 +142,8 @@ database:
 | `config.trustProxy` | Set `true` behind a reverse proxy | `false` |
 | `database.type` | Database backend: `sqlite` or `postgres` | `sqlite` |
 | `adminSecret` | Initial setup secret (avoid in production) | `""` |
-| `ingress.enabled` | Enable Ingress resource | `false` |
+| `ingress.enabled` | Enable Kubernetes Ingress resource | `false` |
+| `ingressRoute.enabled` | Enable Traefik IngressRoute resource | `false` |
 | `commonLabels` | Extra labels applied to all resources | `{}` |
 | `env` | Additional environment variables | `{}` |
 | `resources` | Pod resource requests/limits | See `values.yaml` |

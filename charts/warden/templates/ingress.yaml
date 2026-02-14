@@ -1,6 +1,15 @@
 {{- if .Values.ingress.enabled }}
 {{- $fullName := include "warden.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+{{- $isV1 := .Capabilities.APIVersions.Has "networking.k8s.io/v1" -}}
+{{- $isV1beta1 := .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" -}}
+{{- if $isV1 }}
 apiVersion: networking.k8s.io/v1
+{{- else if $isV1beta1 }}
+apiVersion: networking.k8s.io/v1beta1
+{{- else }}
+apiVersion: extensions/v1beta1
+{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -14,8 +23,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- with .Values.ingress.className }}
-  ingressClassName: {{ . }}
+  {{- if and $isV1 .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
   {{- with .Values.ingress.hosts }}
   rules:
@@ -25,12 +34,18 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
+            {{- if $isV1 }}
             pathType: {{ .pathType }}
             backend:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $.Values.service.port }}
+                  number: {{ $svcPort }}
+            {{- else }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+            {{- end }}
           {{- end }}
     {{- end }}
   {{- end }}
