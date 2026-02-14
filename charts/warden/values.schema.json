@@ -84,6 +84,39 @@
       },
       "additionalProperties": false
     },
+    "ingressRoute": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "annotations": { "$ref": "#/definitions/labelMap" },
+        "entryPoints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "match": { "type": "string" },
+              "kind": { "type": "string" },
+              "middlewares": {
+                "type": "array",
+                "items": { "type": "object" }
+              },
+              "services": {
+                "type": "array",
+                "items": { "type": "object" }
+              }
+            },
+            "required": ["match"],
+            "additionalProperties": false
+          }
+        },
+        "tls": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
     "resources": { "type": "object" },
     "nodeSelector": { "$ref": "#/definitions/labelMap" },
     "tolerations": {
